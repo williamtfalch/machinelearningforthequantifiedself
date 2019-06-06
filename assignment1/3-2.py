@@ -27,11 +27,11 @@ for i in range(5):
     mixes[i] = distribution_bod.mixture_model(data_table, "acc_phone_x")
 
     simples[i] = distance_bod.simple_distance_based(
-        data_table, ["acc_phone_x"], "euclidian", c, 1/c)
+        data_table, ["acc_phone_x"], "euclidean", c, 1/c)
     localoutliers[i] = distance_bod.local_outlier_factor(
-        data_table, ["acc_phone_x", "euclidian", 2*c])
+        data_table, ["acc_phone_x"], "euclidean", 2*c)
 
-    #vis.plot_dataset(chauvs[i], ["x"])
+    # vis.plot_dataset(chauvs[i], ["x"])
 
     # heart_rates = list(map(lambda v: (v[0], v[1]), list(pd.read_csv(
     #    "../crowdsignals/heart_rate_smartwatch.csv", usecols=[2, 3]).values)))
