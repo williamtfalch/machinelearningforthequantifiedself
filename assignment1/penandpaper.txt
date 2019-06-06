@@ -1,0 +1,46 @@
+2.1
+
+When we measure data using sensory devices across multiple users we often see substantial differences
+between the sensory values we obtain. Identify at least three potential causes for these differences.
+
+Sensor-related causes:
+ - Quality of readings of similar sensors between users
+ - Granularity of measurement of sensors
+
+User-related causes:
+ - Activity patterns of users
+ - Fitness of users
+ - Age of users
+ - Gender of users
+
+2.2
+
+We have seen that we can make trade-offs in terms of the granularity at which we consider the measurements 
+in our basic dataset. We have shown the difference between a granularity of delta_t = 0.25s and delta_t = 60s. We arrived 
+at a choice for delta_t = 0.25s for our case, but let us think a bit more general: think of four criteria that play 
+a role in deciding on the granularity for the measurements of a dataset.
+
+1) The type of measurement done
+2) 
+3)
+4)
+
+2.3
+
+We have identified two tasks we are going to tackle for the crowdsignals data. Think of at least two other machine learning 
+tasks that could be performed on the crowdsignals dataset and argue why they could be relevant to support a user 
+(when doing so, keep in mind the different learning approaches discussed in Sect.1.3.2).
+
+3.2
+
+We have seen two types of outlier detection algorithms: distance and distribution based. In what situations would it be better 
+to apply a distance based outlier detection algorithm over a distribution-based approach? 
+
+3.4
+
+The local outlier factor algorithm is quite complex. Find out what the computational complexity of the algorithm is 
+and discuss ways to improve the scalability of the approach. 
+
+4.1
+4.6
+4.7
