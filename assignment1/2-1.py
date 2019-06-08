@@ -126,6 +126,8 @@ def averaged_logs2csvs(averaged_logs, activities):
                 for reading in readings:
                     f.write(','.join(reading) + "\n")
 
+                f.close()
+
 
 activities, logs = sensorlog2activities('./activitylog_tiny.txt')
 averaged_logs = average_logs(logs, 1000)
