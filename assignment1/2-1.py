@@ -1,4 +1,5 @@
 import ast
+from CreateDataset import CreateDataset
 
 
 def sensorlog2activities(path):
@@ -92,8 +93,8 @@ def average_logs(logs, granularity):
                 (timestamps[sensor][1] - timestamps[sensor][0])//granularity + 1)]
 
             for reading in sensors[sensor]:
-                averages[sensor][(timestamps[sensor][0] -
-                                  reading[3])//granularity].append(reading[:3])
+                averages[sensor][(reading[3] - timestamps[sensor]
+                                  [0])//granularity].append(reading[:3])
 
             for i in range(len(averages[sensor])):
                 bracket = averages[sensor][i]
@@ -129,6 +130,15 @@ def averaged_logs2csvs(averaged_logs, activities):
                 f.close()
 
 
-activities, logs = sensorlog2activities('./activitylog_tiny.txt')
-averaged_logs = average_logs(logs, 1000)
+activities, logs = sensorlog2activities('./activitylog.txt')
+averaged_logs = average_logs(logs, 250)
 averaged_logs2csvs(averaged_logs, activities)
+
+'''
+dataset = CreateDataset("./", 1000)
+
+dataset.add_numerical_dataset(
+    "4_LSM6DSL_Gyroscope_Sensor.csv", "timestamp", ["x"])
+
+print(dataset.data_table)
+'''
