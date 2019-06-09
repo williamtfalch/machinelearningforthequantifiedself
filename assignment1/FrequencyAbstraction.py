@@ -17,7 +17,7 @@ class FourierTransformation:
     # Find the amplitudes of the different frequencies using a fast fourier transformation. Here,
     # the sampling rate expresses
     # the number of samples per second (i.e. Frequency is Hertz of the dataset).
-    def find_fft_transformation(self, data):
+    def find_fft_transformation(self, data, sampling_rate):
         # Create the transformation, this includes the amplitudes of both the real
         # and imaginary part.
         transformation = np.fft.rfft(data, len(data))
@@ -39,10 +39,16 @@ class FourierTransformation:
 
         # Pass over the dataset (we cannot compute it when we do not have enough history)
         # and compute the values.
+        print(len(data_table.index))
         for i in range(window_size, len(data_table.index)):
             for col in cols:
+                '''real_ampl, imag_ampl = self.find_fft_transformation(data_table[col][i-window_size:min(i+1, len(data_table.index))], sampling_rate)'''
+
+                data = data_table.to_numpy()
+                formatted_data = list(map(lambda v: v[0], data))
+
                 real_ampl, imag_ampl = self.find_fft_transformation(
-                    data_table[col][i-window_size:min(i+1, len(data_table.index))], sampling_rate)
+                    formatted_data[i-window_size:min(i+1, len(data_table.index))], sampling_rate)
                 # We only look at the real part in this implementation.
                 for j in range(0, len(freqs)):
                     data_table.ix[i, col + '_freq_' +
