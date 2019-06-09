@@ -40,9 +40,9 @@ class VisualizeDataset:
             xar[i].xaxis.set_major_formatter(xfmt)
             # We can match exact (i.e. a columns name is an exact name of a columns or 'like' for
             # which we need to find columns names in the dataset that contain the name.
-            if match[i] == 'exact':
+            if match == 'exact':
                 relevant_dataset_cols = [columns[i]]
-            elif match[i] == 'like':
+            elif match == 'like':
                 relevant_dataset_cols = [name for name in names if columns[i] == name[0:len(columns[i])]]
             else:
                 raise ValueError("Match should be 'exact' or 'like' for " + str(i) + ".")
@@ -82,6 +82,24 @@ class VisualizeDataset:
         plot.plot(freq, ampl_real, '+', freq, ampl_imag,'+')
         plot.legend(['real', 'imaginary'], numpoints=1)
         plot.show()
+
+    def plot_fourier_freqs(self, freq):
+        plot.xlabel('Freq(Hz)')
+        plot.ylabel('amplitude')
+        # Plot the real values as a '+' and imaginary in the same way (though with a different color).
+        plot.plot(freq)
+        plot.legend(['real', 'imaginary'], numpoints=1)
+        plot.show()
+
+    def plot_fourier_realandimag(self, ampl_real, ampl_imag):
+        plot.xlabel('Freq(Hz)')
+        plot.ylabel('amplitude')
+        # Plot the real values as a '+' and imaginary in the same way (though with a different color).
+        plot.plot(ampl_real, '+', ampl_imag,'+')
+        plot.legend(['real', 'imaginary'], numpoints=1)
+        plot.show()
+
+
 
     # Plot outliers in case of a binary outlier score. Here, the col specifies the real data
     # column and outlier_col the columns with a binary value (outlier or not)

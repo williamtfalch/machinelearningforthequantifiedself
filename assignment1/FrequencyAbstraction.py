@@ -39,13 +39,11 @@ class FourierTransformation:
 
         # Pass over the dataset (we cannot compute it when we do not have enough history)
         # and compute the values.
-        print(len(data_table.index))
         for i in range(window_size, len(data_table.index)):
             for col in cols:
                 '''real_ampl, imag_ampl = self.find_fft_transformation(data_table[col][i-window_size:min(i+1, len(data_table.index))], sampling_rate)'''
 
-                data = data_table.to_numpy()
-                formatted_data = list(map(lambda v: v[0], data))
+                formatted_data = list(map(lambda v: v[0], data_table.values))
 
                 real_ampl, imag_ampl = self.find_fft_transformation(
                     formatted_data[i-window_size:min(i+1, len(data_table.index))], sampling_rate)

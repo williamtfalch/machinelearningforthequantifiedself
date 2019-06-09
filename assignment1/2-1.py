@@ -143,12 +143,12 @@ activities, logs = sensorlog2activities('./activitylog.txt')
 averaged_logs = average_logs(logs, 250)
 averaged_logs2csvs(averaged_logs, activities)
 
-
+'''
 dataset = CreateDataset("./", 1000)
 
 dataset.add_numerical_dataset(
     "5_LSM6DSL_Acceleration_Sensor.csv", "timestamp", ["y"])
 
-print(dataset.data_table)
 
 vd.plot_dataset(dataset.data_table, ['y'], "exact")
+'''

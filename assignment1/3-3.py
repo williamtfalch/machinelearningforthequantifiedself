@@ -8,7 +8,7 @@ from VisualizeDataset import VisualizeDataset
 
 class ModelBasedImputation:
     def impute_data(self, data_table):
-        unimputed_data = list(map(lambda v: v[0], data_table.to_numpy()))
+        unimputed_data = list(map(lambda v: v[0], data_table.values))
         not_nan_values = list(
             filter(lambda v: not np.isnan(v), unimputed_data))
         num_not_nan_values = len(not_nan_values)
@@ -40,8 +40,18 @@ class ModelBasedImputation:
 
 mbi = ModelBasedImputation()
 dataset = CreateDataset("./", 1000)
+vis = VisualizeDataset()
 
 dataset.add_numerical_dataset(
     "chapter2_result.csv", "timestamps", ["hr_watch_rate"])
 
+unimputed_data = list(map(lambda ud: ud[0], dataset.data_table.values))
 imputed_data = mbi.impute_data(data_table=dataset.data_table)
+
+print(dataset.data_table)
+
+vis.plot_imputed_values(dataset.data_table, [
+                        "unimputed", "imputed"], "hr_watch_rate", imputed_data)
+
+
+# def plot_imputed_values(self, data_table, names, col, *values):
