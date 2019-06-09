@@ -9,12 +9,16 @@ vd = VisualizeDataset()
 dataset.add_numerical_dataset(
     "chapter2_result.csv", "timestamps", ["acc_phone_x"])
 
+frequencies = ft.abstract_frequency(
+    data_table=dataset.data_table, cols=["acc_phone_x"], window_size=100, sampling_rate=10)
 
-data = dataset.data_table.to_numpy()
-formatted_data = list(map(lambda v: v[0], data))
+frequencies_numpy = frequencies.to_numpy()
+formatted_frequencies = list(map(lambda v: v[0], frequencies_numpy))
 
-d = ft.abstract_frequency(dataset.data_table, ["acc_phone_x"], 100, 10)
+real, imag = ft.find_fft_transformation(
+    data=formatted_frequencies, sampling_rate=10)
 
+vd.plot_fourier_amplitudes(formatted_frequencies, real, imag)
 
 # def abstract_frequency(self, data_table, cols, window_size, sampling_rate):
 

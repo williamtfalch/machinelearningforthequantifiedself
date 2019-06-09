@@ -1,5 +1,7 @@
 import ast
 from CreateDataset import CreateDataset
+from VisualizeDataset import VisualizeDataset
+import datetime
 
 
 def sensorlog2activities(path):
@@ -75,9 +77,9 @@ def average_logs(logs, granularity):
 
             if sensor not in sensors:
                 sensors[sensor] = []
-                #averages[sensor] = []
+                # averages[sensor] = []
 
-                #min, max
+                # min, max
                 timestamps[sensor] = [1000000000000000, 0]
 
             sensors[sensor].append((x, y, z, timestamp))
@@ -107,8 +109,13 @@ def average_logs(logs, granularity):
                 y_avg = sum([b[1] for b in bracket])/len_bracket
                 z_avg = sum([b[2] for b in bracket])/len_bracket
 
-                averages[sensor][i] = [
-                    str(x_avg), str(y_avg), str(z_avg), str(timestamps[sensor][0] + granularity*i)]
+                epochs = (timestamps[sensor][0] + granularity*i)/1000
+
+                ts = datetime.datetime.fromtimestamp(
+                    epochs).strftime('%Y-%m-%d %H:%M:%S')
+
+                averages[sensor][i] = [ts,
+                                       str(x_avg), str(y_avg), str(z_avg)]
 
         averaged_logs[activity] = averages
 
@@ -122,7 +129,7 @@ def averaged_logs2csvs(averaged_logs, activities):
             formatted_sensor = sensor.replace(" ", "_")
 
             with open("./{}_{}.csv".format(activity, formatted_sensor), "w") as f:
-                f.write("x,y,z,timestamp\n")
+                f.write("timestamp,x,y,z\n")
 
                 for reading in readings:
                     f.write(','.join(reading) + "\n")
@@ -130,15 +137,18 @@ def averaged_logs2csvs(averaged_logs, activities):
                 f.close()
 
 
+vd = VisualizeDataset()
+
 activities, logs = sensorlog2activities('./activitylog.txt')
 averaged_logs = average_logs(logs, 250)
 averaged_logs2csvs(averaged_logs, activities)
 
-'''
+
 dataset = CreateDataset("./", 1000)
 
 dataset.add_numerical_dataset(
-    "4_LSM6DSL_Gyroscope_Sensor.csv", "timestamp", ["x"])
+    "5_LSM6DSL_Acceleration_Sensor.csv", "timestamp", ["y"])
 
 print(dataset.data_table)
-'''
+
+vd.plot_dataset(dataset.data_table, ['y'], "exact")
